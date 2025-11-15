@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-interface QuestionOption {
+export interface QuestionOption {
   label: string;
   value: string;
 }
 
-interface Question {
+export interface Question {
   id: string;
   type: 'text' | 'radio' | 'textarea' | 'checkbox';
   question: string;

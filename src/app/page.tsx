@@ -3,13 +3,14 @@
 import { useState } from 'react';
 import QuestionRenderer from '../components/QuestionRenderer';
 import Image from 'next/image';
+import type { Question } from '../components/QuestionRenderer';
 
 export default function Home() {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<{ [key: string]: any }>({});
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const questions = [
+  const questions: Question[] = [
     {
       id: 'name',
       type: 'text',
