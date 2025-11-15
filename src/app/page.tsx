@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import QuestionRenderer from '../components/QuestionRenderer';
+import Image from 'next/image';
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -63,9 +64,34 @@ export default function Home() {
     },
     {
       id: 'whyElitewise',
-      type: 'textarea',
+      type: 'checkbox',
       question: 'What made you want to explore Elitewise Escapes?',
-      placeholder: 'Your answer here...',
+      options: [
+        { label: 'Planning a luxury vacation without the extravagant price tag.', value: 'luxury_vacation' },
+        { label: 'Maximizing the value of credit card points and other travel rewards.', value: 'maximize_rewards' },
+        { label: 'Getting expert assistance in curating high-end travel experiences.', value: 'expert_assistance' },
+        { label: 'Having a seamless and stress-free travel planning process.', value: 'stress_free' },
+        { label: 'Gaining access to exclusive experiences and insider knowledge.', value: 'exclusive_access' },
+        { label: 'Saving money on luxury travel while still enjoying premium amenities.', value: 'save_money' },
+        { label: 'Turning dream getaways into reality with personalized itineraries.', value: 'dream_getaways' },
+        { label: 'Other', value: 'other' },
+      ],
+    },
+    {
+      id: 'howDidYouHear',
+      type: 'checkbox',
+      question: 'How did you hear about us?',
+      options: [
+        { label: 'Search Engine (Google, Bing, etc.)', value: 'search_engine' },
+        { label: 'Social Media (Facebook, Instagram, X/Twitter, LinkedIn, etc.)', value: 'social_media' },
+        { label: 'Friend or Colleague / Word-of-Mouth', value: 'word_of_mouth' },
+        { label: 'Advertisement (Online ad, TV, Radio, Print)', value: 'advertisement' },
+        { label: 'Blog or Article', value: 'blog_article' },
+        { label: 'Podcast', value: 'podcast' },
+        { label: 'Event or Conference', value: 'event_conference' },
+        { label: 'Referral', value: 'referral' },
+        { label: 'Other', value: 'other' },
+      ],
     },
   ];
 
@@ -91,10 +117,27 @@ export default function Home() {
     }
   };
 
-  const handleSubmit = () => {
-    console.log('Form Data:', formData);
-    // Here you would typically send the formData to a backend API
-    setIsSubmitted(true);
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/submit-form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form data.');
+      }
+
+      const result = await response.json();
+      console.log('Form submission successful:', result);
+      setIsSubmitted(true);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      alert('There was an error submitting your form. Please try again.');
+    }
   };
 
   if (isSubmitted) {
@@ -114,7 +157,15 @@ export default function Home() {
         className="w-full max-w-xl p-8 rounded-lg shadow-lg"
         style={{ backgroundColor: '#c07481' }}
       >
-        <h1 className="text-3xl font-bold mb-8 text-center text-light">Join Elitewise Escapes</h1>
+        <div className="flex justify-center mb-8">
+          <Image src="/logo.png" alt="Elitewise Escapes Logo" width={150} height={150} />
+        </div>
+        <h1
+          className="text-3xl font-bold mb-8 text-center"
+          style={{ color: '#23203e' }}
+        >
+          Join Elitewise Escapes
+        </h1>
 
         {/* Progress Bar */}
         <div className="w-full bg-gray-200 rounded-full h-2.5 mb-8">
