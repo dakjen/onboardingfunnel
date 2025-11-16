@@ -151,8 +151,8 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center pt-12 bg-primary text-light">
       <div
-        className="w-full p-8 rounded-lg shadow-lg"
-        style={{ backgroundColor: '#c07481', maxWidth: '720px' }}
+        className="w-full max-w-2xl p-8 rounded-lg shadow-lg"
+        style={{ backgroundColor: '#c07481' }}
       >
         <div className="flex justify-center mb-8">
           <Image src="/logo.png" alt="Elitewise Escapes Logo" width={150} height={150} />
