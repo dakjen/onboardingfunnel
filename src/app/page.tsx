@@ -130,6 +130,39 @@ export default function Home() {
 
       const result = await response.json();
       console.log('Form submission successful:', result);
+
+      // --- Start: Call Supabase Edge Function to send email ---
+      const recipientEmail = formData.email; // Assuming 'email' is the ID of the email question
+      const userName = formData.name; // Assuming 'name' is the ID of the name question
+
+      if (recipientEmail) {
+        try {
+          const emailResponse = await fetch('https://wtiuyauzhxpymyfccmay.supabase.co/functions/v1/resend-email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              // 'Authorization': 'Bearer YOUR_SUPABASE_ANON_KEY', // Removed for automatic anon key usage
+            },
+            body: JSON.stringify({
+              from: 'Elitewise Escapes <travel@elitewiseescapes.com>', // Your verified sender email
+              to: recipientEmail,
+              subject: `Welcome to Elitewise Escapes, ${userName || 'Traveler'}!`,
+              html: `<h1>Hello ${userName || 'Traveler'},</h1><p>Thank you for joining Elitewise Escapes! We're excited to help you plan your next adventure.</p><p>We'll be in touch shortly with more details.</p>`,
+            }),
+          });
+
+          if (!emailResponse.ok) {
+            const errorData = await emailResponse.json();
+            console.error('Failed to send welcome email:', errorData);
+          } else {
+            console.log('Welcome email sent successfully!');
+          }
+        } catch (emailError) {
+          console.error('Error sending welcome email:', emailError);
+        }
+      }
+      // --- End: Call Supabase Edge Function to send email ---
+
       setIsSubmitted(true);
     } catch (error) {
       console.error('Error submitting form:', error);
