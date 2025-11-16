@@ -143,7 +143,7 @@ export default function Home() {
 
   if (isSubmitted) {
     return (
-      <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary text-light">
+      <main className="flex min-h-screen flex-col items-center pt-12 bg-primary text-light">
         <div className="w-full max-w-xl text-center">
           <h1 className="text-3xl font-bold mb-8">Join Elitewise Escapes</h1>
           <p className="text-lg">Your information has been submitted. We'll be in touch shortly.</p>
@@ -153,7 +153,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary text-light">
+    <main className="flex min-h-screen flex-col items-center pt-12 bg-primary text-light">
       <div
         className="w-full max-w-xl p-8 rounded-lg shadow-lg"
         style={{ backgroundColor: '#c07481' }}

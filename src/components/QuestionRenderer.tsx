@@ -24,7 +24,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, formData,
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = e.target;
-    const currentValues = formData[question.id] || [];
+    const currentValues = Array.isArray(formData[question.id]) ? formData[question.id] : [];
 
     if (checked) {
       setFormData((prev) => ({ ...prev, [question.id]: [...currentValues, value] }));
@@ -44,11 +44,12 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, formData,
   };
 
   useEffect(() => {
-    const otherIsSelected = (formData[question.id] || []).includes('other') || (formData[question.id] || []).some((v: string) => v.startsWith('other:'));
+    const currentFormDataValues = Array.isArray(formData[question.id]) ? formData[question.id] : [];
+    const otherIsSelected = currentFormDataValues.includes('other') || currentFormDataValues.some((v: string) => v.startsWith('other:'));
 
     if (otherIsSelected) {
-      const otherIndex = (formData[question.id] || []).findIndex((v: string) => v === 'other' || v.startsWith('other:'));
-      const newValues = [...(formData[question.id] || [])];
+      const otherIndex = currentFormDataValues.findIndex((v: string) => v === 'other' || v.startsWith('other:'));
+      const newValues = [...currentFormDataValues];
       
       if (otherIndex !== -1) {
         newValues[otherIndex] = `other: ${otherValue}`;
@@ -135,7 +136,7 @@ const QuestionRenderer: React.FC<QuestionRendererProps> = ({ question, formData,
                   id={`${question.id}-${option.value}`}
                   name={question.id}
                   value={option.value}
-                  checked={(formData[question.id] || []).includes(option.value) || ((formData[question.id] || []).some((v: string) => v.startsWith('other:')) && option.value === 'other')}
+                  checked={(Array.isArray(formData[question.id]) ? formData[question.id] : []).includes(option.value) || ((Array.isArray(formData[question.id]) ? formData[question.id] : []).some((v: string) => v.startsWith('other:')) && option.value === 'other')}
                   onChange={handleChange}
                   className="h-5 w-5 text-accent focus:ring-accent border-gray-300 rounded"
                 />
