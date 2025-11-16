@@ -135,13 +135,15 @@ export default function Home() {
       const recipientEmail = formData.email; // Assuming 'email' is the ID of the email question
       const userName = formData.name; // Assuming 'name' is the ID of the name question
 
+      console.log('FormData being sent to Edge Function:', formData); // ADDED THIS LINE
+
       if (recipientEmail) {
         try {
           const emailResponse = await fetch('https://wtiuyauzhxpymyfccmay.supabase.co/functions/v1/resend-email', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
-              // 'Authorization': 'Bearer YOUR_SUPABASE_ANON_KEY', // Removed for automatic anon key usage
+              'Authorization': `Bearer ${process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY}`,
             },
             body: JSON.stringify({
               from: 'Elitewise Escapes <travel@elitewiseescapes.com>', // Your verified sender email
