@@ -1,9 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState } from 'react'; // Keep this one
 import QuestionRenderer from '../components/QuestionRenderer';
 import Image from 'next/image';
 import type { Question } from '../components/QuestionRenderer';
+
 
 export default function Home() {
   const [step, setStep] = useState(1);
@@ -178,6 +179,12 @@ export default function Home() {
         <div className="w-full max-w-xl text-center">
           <h1 className="text-3xl font-bold mb-8">Join Elitewise Escapes</h1>
           <p className="text-lg">Your information has been submitted. We'll be in touch shortly.</p>
+          {/* New Explore the Website Button */}
+          <div style={{ marginTop: '30px' }}>
+            <a href="https://elitewiseescapes.com/our-services" style={{ backgroundColor: '#c07481', color: '#ffffff', padding: '12px 20px', borderRadius: '5px', display: 'inline-block', textDecoration: 'none', fontWeight: 'bold' }}>
+              Explore the Website
+            </a>
+          </div>
         </div>
       </main>
     );
